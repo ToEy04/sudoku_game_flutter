@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' show Random;
 
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,8 @@ class SudokuChannel {
   bool enableWarning;
   int value;
 
-  SudokuChannel({this.value = 0, this.enableMove = true, this.enableWarning = false});
+  SudokuChannel(
+      {this.value = 0, this.enableMove = true, this.enableWarning = false});
 }
 
 class SudokuSubTable {
@@ -77,7 +78,7 @@ class SudokuTable {
       List<SudokuSubTable> list = List();
       for (int col = 0; col < COUNT_COL_SUB_TABLE; col++) {
         SudokuSubTable subTable =
-        SudokuSubTable(indexRowInTable: row, indexColInTable: col);
+            SudokuSubTable(indexRowInTable: row, indexColInTable: col);
         subTable.init();
         list.add(subTable);
       }
@@ -172,9 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size= MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double shortestSize = size.shortestSide;
     double width = size.width;
     double height = size.height;
@@ -182,13 +181,16 @@ class _MyHomePageState extends State<MyHomePage> {
     // Tablet case
     if (shortestSize >= 600) {
       fontScale = 1.7;
-      if (width > height) { // Tablet landscape
+      if (width > height) {
+        // Tablet landscape
         channelSize = shortestSize / 9 - 30;
-      }else{ // tablet portrait
+      } else {
+        // tablet portrait
         channelSize = shortestSize / 9 - 10;
       }
-    } else { // phone case (portrait only)
-        channelSize = shortestSize / 9 - 10;
+    } else {
+      // phone case (portrait only)
+      channelSize = shortestSize / 9 - 10;
     }
 
     return Scaffold(
@@ -205,58 +207,58 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: colorBorderTable,
-                                      borderRadius:
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: colorBorderTable,
+                                  borderRadius:
                                       BorderRadius.all(Radius.circular(8))),
-                                  padding: EdgeInsets.all(6),
-                                  child: Column(
+                              padding: EdgeInsets.all(6),
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Row(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
+                                        buildSubTable(sudokuTable.table[0][0],
+                                            colorBackgroundChannelEmpty1),
+                                        buildSubTable(sudokuTable.table[0][1],
+                                            colorBackgroundChannelEmpty2),
+                                        buildSubTable(sudokuTable.table[0][2],
+                                            colorBackgroundChannelEmpty1),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            buildSubTable(sudokuTable.table[0][0],
-                                                colorBackgroundChannelEmpty1),
-                                            buildSubTable(sudokuTable.table[0][1],
-                                                colorBackgroundChannelEmpty2),
-                                            buildSubTable(sudokuTable.table[0][2],
-                                                colorBackgroundChannelEmpty1),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
+                                      children: <Widget>[
+                                        buildSubTable(sudokuTable.table[1][0],
+                                            colorBackgroundChannelEmpty2),
+                                        buildSubTable(sudokuTable.table[1][1],
+                                            colorBackgroundChannelEmpty1),
+                                        buildSubTable(sudokuTable.table[1][2],
+                                            colorBackgroundChannelEmpty2),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            buildSubTable(sudokuTable.table[1][0],
-                                                colorBackgroundChannelEmpty2),
-                                            buildSubTable(sudokuTable.table[1][1],
-                                                colorBackgroundChannelEmpty1),
-                                            buildSubTable(sudokuTable.table[1][2],
-                                                colorBackgroundChannelEmpty2),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            buildSubTable(sudokuTable.table[2][0],
-                                                colorBackgroundChannelEmpty1),
-                                            buildSubTable(sudokuTable.table[2][1],
-                                                colorBackgroundChannelEmpty2),
-                                            buildSubTable(sudokuTable.table[2][2],
-                                                colorBackgroundChannelEmpty1),
-                                          ],
-                                        )
-                                      ]),
-                                )
-                              ])))),
+                                      children: <Widget>[
+                                        buildSubTable(sudokuTable.table[2][0],
+                                            colorBackgroundChannelEmpty1),
+                                        buildSubTable(sudokuTable.table[2][1],
+                                            colorBackgroundChannelEmpty2),
+                                        buildSubTable(sudokuTable.table[2][2],
+                                            colorBackgroundChannelEmpty1),
+                                      ],
+                                    )
+                                  ]),
+                            )
+                          ])))),
               Container(height: 8, color: Colors.blue[200]),
               Container(
                   padding: EdgeInsets.all(12),
@@ -274,7 +276,7 @@ class _MyHomePageState extends State<MyHomePage> {
       constraints: BoxConstraints.expand(height: 100),
       color: Colors.white,
       child:
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
         Text("SUDOKU",
             style: TextStyle(
                 color: Colors.blue[700],
@@ -312,29 +314,30 @@ class _MyHomePageState extends State<MyHomePage> {
         ]));
   }
 
-  List<Widget> buildRowChannel(SudokuSubTable subTable, int rowChannel, Color color) {
+  List<Widget> buildRowChannel(
+      SudokuSubTable subTable, int rowChannel, Color color) {
     List<SudokuChannel> dataRowChanel = subTable.subTable[rowChannel];
     List<Widget> listWidget = List();
     for (int col = 0; col < 3; col++) {
       Widget widget = buildChannel(rowChannel, dataRowChanel[col], color,
           onNumberAccept: (data) {
-            setState(() {
-              sudokuTable.table[subTable.indexRowInTable][subTable.indexColInTable]
-                  .subTable[rowChannel][col] = SudokuChannel(value: data);
-            });
-          }, onRemove: () {
-            setState(() {
-              sudokuTable.table[subTable.indexRowInTable][subTable.indexColInTable]
-                  .subTable[rowChannel][col] = SudokuChannel();
-            });
-          }, onHover: (value) {
-            setState(() {
-              showWaringConflictChannel(subTable.indexRowInTable,
-                  subTable.indexColInTable, rowChannel, col, value);
-            });
-          }, onHoverEnd: () {
-            clearWaringConflictChannel();
-          });
+        setState(() {
+          sudokuTable.table[subTable.indexRowInTable][subTable.indexColInTable]
+              .subTable[rowChannel][col] = SudokuChannel(value: data);
+        });
+      }, onRemove: () {
+        setState(() {
+          sudokuTable.table[subTable.indexRowInTable][subTable.indexColInTable]
+              .subTable[rowChannel][col] = SudokuChannel();
+        });
+      }, onHover: (value) {
+        setState(() {
+          showWaringConflictChannel(subTable.indexRowInTable,
+              subTable.indexColInTable, rowChannel, col, value);
+        });
+      }, onHoverEnd: () {
+        clearWaringConflictChannel();
+      });
       listWidget.add(widget);
     }
     return listWidget;
@@ -342,9 +345,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildChannel(int rowChannel, SudokuChannel channel, Color color,
       {Function(int) onNumberAccept,
-        Function() onRemove,
-        Function(int) onHover,
-        Function onHoverEnd}) {
+      Function() onRemove,
+      Function(int) onHover,
+      Function onHoverEnd}) {
     if (channel.value == 0) {
       return DragTarget(builder: (BuildContext context, List<int> candidateData,
           List<dynamic> rejectedData) {
@@ -461,7 +464,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Draggable(
       child: buildNumberBox(i),
       feedback:
-      Material(type: MaterialType.transparency, child: buildNumberBox(i)),
+          Material(type: MaterialType.transparency, child: buildNumberBox(i)),
       data: i,
       onDragEnd: (d) {
         setState(() {
@@ -479,12 +482,13 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(
             color: colorBackgroundChannelValue,
             borderRadius: BorderRadius.all(Radius.circular(8))),
-        child: Center(child: Text("$i",
-            textScaleFactor: fontScale,
-            style: TextStyle(
-                fontSize: 22,
-                color: colorTextNumber,
-                fontWeight: FontWeight.w900))));
+        child: Center(
+            child: Text("$i",
+                textScaleFactor: fontScale,
+                style: TextStyle(
+                    fontSize: 22,
+                    color: colorTextNumber,
+                    fontWeight: FontWeight.w900))));
   }
 
   void showWaringConflictChannel(int rowSubTable, int colSubTable,
@@ -493,7 +497,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int i = 0; i < COUNT_ROW_SUB_TABLE; i++) {
       for (int j = 0; j < COUNT_ROW_SUB_TABLE; j++) {
         SudokuChannel channel =
-        sudokuTable.table[rowSubTable][i].subTable[rowChannel][j];
+            sudokuTable.table[rowSubTable][i].subTable[rowChannel][j];
         sudokuTable.table[rowSubTable][i].subTable[rowChannel][j]
             .enableWarning = channel.value == value;
         print("" + channel.value.toString());
@@ -504,7 +508,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int i = 0; i < COUNT_COL_SUB_TABLE; i++) {
       for (int j = 0; j < COUNT_COL_SUB_TABLE; j++) {
         SudokuChannel channel =
-        sudokuTable.table[i][colSubTable].subTable[j][colChannel];
+            sudokuTable.table[i][colSubTable].subTable[j][colChannel];
         sudokuTable.table[i][colSubTable].subTable[j][colChannel]
             .enableWarning = channel.value == value;
         print("" + channel.value.toString());
